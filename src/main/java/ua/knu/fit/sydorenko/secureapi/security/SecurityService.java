@@ -33,16 +33,16 @@ public class SecurityService {
         return userRepository.findByUsername(username)
                 .flatMap(user -> {
                     if (!user.isEnabled()) {
-                        return Mono.error(new AuthException("Authentication failed", "401"));
+                        return Mono.error(new AuthException("Authentication failed"));
                     }
 
                     if (!passwordEncoder.matches(password, user.getPassword())) {
-                        return Mono.error(new AuthException("Authentication failed", "401"));
+                        return Mono.error(new AuthException("Authentication failed"));
                     }
 
                     return Mono.just(new TokenDetails());
                 })
-                .switchIfEmpty(Mono.error(new AuthException("Authentication failed", "401")));
+                .switchIfEmpty(Mono.error(new AuthException("Authentication failed")));
     }
 
     private TokenDetails generateToken(UserEntity user) {
