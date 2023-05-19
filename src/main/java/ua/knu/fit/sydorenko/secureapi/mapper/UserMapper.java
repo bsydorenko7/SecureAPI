@@ -3,7 +3,7 @@ package ua.knu.fit.sydorenko.secureapi.mapper;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import ua.knu.fit.sydorenko.secureapi.entity.UserEntity;
-import ua.knu.fit.sydorenko.secureapi.entity.dto.UserDto;
+import ua.knu.fit.sydorenko.secureapi.dto.UserDto;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
