@@ -6,6 +6,6 @@ CREATE TABLE users (
                        first_name VARCHAR(64)   NOT NULL,
                        last_name  VARCHAR(64)   NOT NULL,
                        enabled    BOOLEAN       NOT NULL DEFAULT FALSE,
-                       created_at TIMESTAMP,
-                       updated_at TIMESTAMP
+                       created_time TIMESTAMP,
+                       updated_time TIMESTAMP
 );
