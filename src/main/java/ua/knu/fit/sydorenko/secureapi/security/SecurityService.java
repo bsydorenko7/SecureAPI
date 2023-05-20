@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import ua.knu.fit.sydorenko.secureapi.entity.UserEntity;
 import ua.knu.fit.sydorenko.secureapi.exception.AuthException;
-import ua.knu.fit.sydorenko.secureapi.repository.UserRepository;
+import ua.knu.fit.sydorenko.secureapi.service.UserService;
 
 import java.util.*;
 
@@ -19,8 +19,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class SecurityService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -30,7 +30,7 @@ public class SecurityService {
     private String issuer;
 
     public Mono<TokenDetails> authenticate(String username, String password) {
-        return userRepository.findByUsername(username)
+        return userService.getUserByUsername(username)
                 .flatMap(user -> {
                     if (!user.isEnabled()) {
                         return Mono.error(new AuthException("Authentication failed"));
@@ -40,7 +40,9 @@ public class SecurityService {
                         return Mono.error(new AuthException("Authentication failed"));
                     }
 
-                    return Mono.just(new TokenDetails());
+                    return Mono.just(generateToken(user).toBuilder()
+                            .userId(user.getId())
+                            .build());
                 })
                 .switchIfEmpty(Mono.error(new AuthException("Authentication failed")));
     }
