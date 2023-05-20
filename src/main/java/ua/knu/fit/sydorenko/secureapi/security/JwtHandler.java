@@ -3,7 +3,6 @@ package ua.knu.fit.sydorenko.secureapi.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import reactor.core.publisher.Mono;
-import ua.knu.fit.sydorenko.secureapi.exception.AuthException;
 import ua.knu.fit.sydorenko.secureapi.exception.UnauthorizedException;
 
 import java.util.Base64;
