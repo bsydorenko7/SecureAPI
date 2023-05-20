@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
-public class BearerTokenAuthenticationConverter implements ServerAuthenticationConverter {
+public class BearerTokenServerAuthenticationConverter implements ServerAuthenticationConverter {
 
     private final JwtHandler jwtHandler;
     private static final String BEARER_PREFIX = "Bearer ";
