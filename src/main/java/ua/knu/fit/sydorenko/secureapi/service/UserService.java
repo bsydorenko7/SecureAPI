@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 import ua.knu.fit.sydorenko.secureapi.entity.UserEntity;
 import ua.knu.fit.sydorenko.secureapi.entity.UserRole;
 import ua.knu.fit.sydorenko.secureapi.repository.UserRepository;
+import ua.knu.fit.sydorenko.secureapi.validation.Validator;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +19,17 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final Validator validator;
 
-    public Mono<UserEntity> registerUser(UserEntity user) {
+    public Mono<UserEntity> registerUser(UserEntity inputUser) {
+
         return userRepository.save(
-                user.toBuilder()
-                        .password(passwordEncoder.encode(user.getPassword()))
-                        .role(UserRole.USER_ROLE)
+                new UserEntity().toBuilder()
+                        .username(validator.validateValue(inputUser.getUsername()))
+                        .firstName(validator.validateValue(inputUser.getUsername()))
+                        .lastName(validator.validateValue(inputUser.getLastName()))
+                        .password(passwordEncoder.encode(inputUser.getPassword()))
+                        .role(UserRole.ROLE_USER)
                         .enabled(true)
                         .createdTime(LocalDateTime.now())
                         .updatedTime(LocalDateTime.now())
@@ -39,5 +45,9 @@ public class UserService {
 
     public Mono<UserEntity> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public Mono<Void> deleteUser(long id) {
+        return userRepository.deleteById(id);
     }
 }
