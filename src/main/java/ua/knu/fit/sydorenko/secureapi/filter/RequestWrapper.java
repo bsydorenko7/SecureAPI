@@ -6,7 +6,6 @@ import ua.knu.fit.sydorenko.secureapi.dto.ErrorResponse;
 import ua.knu.fit.sydorenko.secureapi.exception.XSSServletException;
 import ua.knu.fit.sydorenko.secureapi.validation.XSSValidator;
 
-import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
