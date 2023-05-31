@@ -20,7 +20,6 @@ import ua.knu.fit.sydorenko.secureapi.security.JwtHandler;
 
 @Slf4j
 @Configuration
-@EnableMethodSecurity
 @EnableReactiveMethodSecurity
 public class WebSecurityConfig {
 

@@ -22,15 +22,14 @@ import java.util.List;
 @Component
 public class ResponseFilter implements Filter {
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
+
     @Value("#{'${skip_words}'.split(',')}")
     private List<String> skipWords;
 
+    @Autowired
     private ExceptionController exceptionController;
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -86,11 +85,6 @@ public class ResponseFilter implements Filter {
         }
     }
 
-    @Override
-    public void destroy() {
-
-    }
-
 
     public String convertObjectToJson(Object object) throws JsonProcessingException {
         if (object == null) {
@@ -101,5 +95,3 @@ public class ResponseFilter implements Filter {
     }
 
 }
-
-
