@@ -56,7 +56,7 @@ public class AuthRestControllerV1 {
                 .map(userMapper::map);
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/status/{userId}")
     public Mono<Void> changeUserStatus(@PathVariable(value="userId") Long userId) {
         return userService.deleteUser(userId);
     }

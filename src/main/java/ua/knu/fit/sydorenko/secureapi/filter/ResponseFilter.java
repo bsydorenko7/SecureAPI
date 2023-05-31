@@ -25,6 +25,7 @@ public class ResponseFilter implements Filter {
     @Value("#{'${skip_words}'.split(',')}")
     private List<String> skipWords;
 
+    @Autowired
     private ExceptionController exceptionController;
 
     @Override
