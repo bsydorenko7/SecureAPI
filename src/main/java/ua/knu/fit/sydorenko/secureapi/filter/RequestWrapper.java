@@ -6,7 +6,6 @@ import ua.knu.fit.sydorenko.secureapi.dto.ErrorResponse;
 import ua.knu.fit.sydorenko.secureapi.exception.XSSServletException;
 import ua.knu.fit.sydorenko.secureapi.validation.XSSValidator;
 
-import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -97,21 +96,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public ServletInputStream getInputStream() throws IOException {
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
         ServletInputStream servletInputStream = new ServletInputStream() {
-
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
-
-            @Override
-            public boolean isReady() {
-                return false;
-            }
-
-            @Override
-            public void setReadListener(ReadListener readListener) {
-
-            }
 
             public int read() throws IOException {
                 return byteArrayInputStream.read();

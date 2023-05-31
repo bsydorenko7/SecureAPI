@@ -2,7 +2,8 @@ package ua.knu.fit.sydorenko.secureapi.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
+//import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ua.knu.fit.sydorenko.secureapi.dto.ErrorResponse;
 import javax.servlet.http.HttpServletRequest;
 
