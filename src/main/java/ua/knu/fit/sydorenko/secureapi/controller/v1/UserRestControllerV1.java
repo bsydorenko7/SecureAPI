@@ -1,9 +1,6 @@
 package ua.knu.fit.sydorenko.secureapi.controller.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -19,8 +16,8 @@ import ua.knu.fit.sydorenko.secureapi.validation.Validator;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
-public class AuthRestControllerV1 {
+@RequestMapping("/api/v1/user")
+public class UserRestControllerV1 {
 
     private final SecurityService securityService;
     private final UserService userService;
@@ -48,7 +45,6 @@ public class AuthRestControllerV1 {
     }
 
     @GetMapping("/info")
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
     public Mono<UserDto> getUserInfo(Authentication authentication) {
         CustomPrincipal customPrincipal = (CustomPrincipal) authentication.getPrincipal();
 
@@ -56,7 +52,7 @@ public class AuthRestControllerV1 {
                 .map(userMapper::map);
     }
 
-    @DeleteMapping("/status/{userId}")
+    @DeleteMapping("/delete/{userId}")
     public Mono<Void> changeUserStatus(@PathVariable(value="userId") Long userId) {
         return userService.deleteUser(userId);
     }

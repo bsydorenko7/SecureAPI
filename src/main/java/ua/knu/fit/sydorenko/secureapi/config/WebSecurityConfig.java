@@ -27,7 +27,8 @@ public class WebSecurityConfig {
     @Value("${jwt.secret}")
     private String secret;
 
-    private final String [] publicRoutes = {"/api/v1/auth/register", "/api/v1/auth/login"};
+    private final String [] publicRoutes = {"/api/v1/user/register", "/api/v1/user/login"};
+    private final String [] adminRoutes = {"/api/v1/user/delete/{userId}"};
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, AuthenticationManager authenticationManager) {
@@ -38,6 +39,8 @@ public class WebSecurityConfig {
                 .permitAll()
                 .pathMatchers(publicRoutes)
                 .permitAll()
+                .pathMatchers(adminRoutes)
+                .hasRole("ADMIN")
                 .anyExchange()
                 .authenticated()
                 .and()

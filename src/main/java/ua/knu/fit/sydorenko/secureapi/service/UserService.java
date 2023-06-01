@@ -48,6 +48,7 @@ public class UserService {
     }
 
     public Mono<Void> deleteUser(long id) {
+        log.info("IN deleteUser - user with id: {} deleted", id);
         return userRepository.deleteById(id);
     }
 }
