@@ -39,6 +39,24 @@ public class UserService {
         });
     }
 
+    public Mono<UserEntity> registerAdmin(UserEntity inputUser) {
+
+        return userRepository.save(
+                new UserEntity().toBuilder()
+                        .username(validator.validateValue(inputUser.getUsername()))
+                        .firstName(validator.validateValue(inputUser.getUsername()))
+                        .lastName(validator.validateValue(inputUser.getLastName()))
+                        .password(passwordEncoder.encode(inputUser.getPassword()))
+                        .role(UserRole.ROLE_ADMIN)
+                        .enabled(true)
+                        .createdTime(LocalDateTime.now())
+                        .updatedTime(LocalDateTime.now())
+                        .build()
+        ).doOnSuccess(u -> {
+            log.info("IN registerUser - user: {} created", u);
+        });
+    }
+
     public Mono<UserEntity> getUserById(Long id) {
         return userRepository.findById(id);
     }
@@ -48,7 +66,8 @@ public class UserService {
     }
 
     public Mono<Void> deleteUser(long id) {
-        log.info("IN deleteUser - user with id: {} deleted", id);
-        return userRepository.deleteById(id);
+        return userRepository.deleteById(id).doOnSuccess(u -> {
+            log.info("IN deleteUser - user with id: {} deleted", id);
+        });
     }
 }

@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     private String secret;
 
     private final String [] publicRoutes = {"/api/v1/user/register", "/api/v1/user/login"};
-    private final String [] adminRoutes = {"/api/v1/user/delete/{userId}"};
+    private final String [] adminRoutes = {"/api/v1/user/admin/register", "/api/v1/user/delete/{userId}"};
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, AuthenticationManager authenticationManager) {

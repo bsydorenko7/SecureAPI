@@ -25,9 +25,16 @@ public class UserRestControllerV1 {
     private final Validator validator;
 
     @PostMapping("/register")
-    public Mono<UserDto> register(@RequestBody UserDto userDto) {
+    public Mono<UserDto> registerUser(@RequestBody UserDto userDto) {
         UserEntity userEntity = userMapper.map(userDto);
         return userService.registerUser(userEntity)
+                .map(userMapper::map);
+    }
+
+    @PostMapping("/admin/register")
+    public Mono<UserDto> registerAdmin(@RequestBody UserDto userDto) {
+        UserEntity userEntity = userMapper.map(userDto);
+        return userService.registerAdmin(userEntity)
                 .map(userMapper::map);
     }
 
