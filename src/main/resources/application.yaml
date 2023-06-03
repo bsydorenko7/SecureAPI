@@ -1,4 +1,10 @@
 server:
+  ssl:
+    key-store-password: password
+    key-store-type: pkcs12
+    key-store: classpath:secureapi.jks
+    key-password: password
+    key-alias: secureapi
   port: 8085
 
 spring:
