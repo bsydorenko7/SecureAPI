@@ -31,9 +31,7 @@ public class RateLimitFilter implements WebFilter {
         ServerHttpResponse response = exchange.getResponse();
         ConsumptionProbe consumptionProbe = getBucket().tryConsumeAndReturnRemaining(1);
         Long remainingLimit = consumptionProbe.getRemainingTokens();
-        if (consumptionProbe.isConsumed()) {
-            log.info("Remaining {}", remainingLimit);
-        } else {
+        if (!consumptionProbe.isConsumed()) {
             return Mono.error(new RateLimitException("TOO MANY REQUEST"));
         }
         response.getHeaders().set("X-Rate-Limit-Remaining", String.valueOf(remainingLimit));
