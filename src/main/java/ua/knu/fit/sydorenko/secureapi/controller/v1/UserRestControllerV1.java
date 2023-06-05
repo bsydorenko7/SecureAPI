@@ -1,5 +1,6 @@
 package ua.knu.fit.sydorenko.secureapi.controller.v1;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -25,21 +26,21 @@ public class UserRestControllerV1 {
     private final Validator validator;
 
     @PostMapping("/register")
-    public Mono<UserDto> registerUser(@RequestBody UserDto userDto) {
+    public Mono<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
         UserEntity userEntity = userMapper.map(userDto);
         return userService.registerUser(userEntity)
                 .map(userMapper::map);
     }
 
     @PostMapping("/admin/register")
-    public Mono<UserDto> registerAdmin(@RequestBody UserDto userDto) {
+    public Mono<UserDto> registerAdmin(@Valid @RequestBody UserDto userDto) {
         UserEntity userEntity = userMapper.map(userDto);
         return userService.registerAdmin(userEntity)
                 .map(userMapper::map);
     }
 
     @PostMapping("/login")
-    public Mono<AuthResponseDto> login(@RequestBody AuthRequestDto authRequestDto) {
+    public Mono<AuthResponseDto> login(@Valid @RequestBody AuthRequestDto authRequestDto) {
         return securityService.authenticate(validator.validateValue(authRequestDto.getUsername()), authRequestDto.getPassword())
                 .flatMap(tokenDetails -> Mono.just(
                         AuthResponseDto.builder()
